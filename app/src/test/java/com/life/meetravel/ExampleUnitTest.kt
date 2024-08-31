@@ -1,4 +1,4 @@
-package com.example.meetravel
+package com.life.meetravel
 
 import org.junit.Test
 

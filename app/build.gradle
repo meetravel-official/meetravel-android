@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace 'com.example.meetravel'
+    namespace 'com.life.meetravel'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.example.meetravel"
+        applicationId "com.life.meetravel"
         minSdk 24
         targetSdk 33
         versionCode 1

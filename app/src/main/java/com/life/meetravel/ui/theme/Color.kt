@@ -1,4 +1,4 @@
-package com.example.meetravel.ui.theme
+package com.life.meetravel.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
