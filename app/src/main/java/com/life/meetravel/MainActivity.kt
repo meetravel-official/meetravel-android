@@ -6,7 +6,6 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.activity.ComponentActivity
 
-
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,7 +27,7 @@ class MainActivity : ComponentActivity() {
             myWebView.goBack()
         }
         else {
-            onBackPressedDispatcher.onBackPressed()
+            super.onBackPressedDispatcher.onBackPressed()
         }
     }
 }
