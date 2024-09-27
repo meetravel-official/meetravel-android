@@ -3,7 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools">
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
-
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <application
         android:name=".MeetravelApplication"
         android:allowBackup="true"
@@ -16,6 +19,7 @@
         android:theme="@style/Theme.Meetravel"
         tools:targetApi="31"
         android:usesCleartextTraffic="true"
+        android:requestLegacyExternalStorage="true"
         >
         <activity
             android:name=".MainActivity"
