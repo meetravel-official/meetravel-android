@@ -5,17 +5,21 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
+import android.os.Message
 import android.provider.MediaStore
 import android.util.Log
 import android.webkit.PermissionRequest
 import android.webkit.ValueCallback
 import android.webkit.WebChromeClient
+import android.webkit.WebResourceRequest
 import android.webkit.WebView
+import android.webkit.WebViewClient
 import androidx.activity.ComponentActivity
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.google.firebase.messaging.FirebaseMessaging
+import java.net.URISyntaxException
 
 class MainActivity : ComponentActivity() {
     var webViewImageUpload: ValueCallback<Array<Uri>>? = null
@@ -54,7 +58,7 @@ class MainActivity : ComponentActivity() {
             // sendTokenToServer(token)
         }
         getPermission()
-        myWebView.loadUrl("http://192.168.219.107:3030")
+        myWebView.loadUrl("https://meetravel.life")
         myWebView.settings.apply {
             javaScriptEnabled = true
             javaScriptCanOpenWindowsAutomatically = true
@@ -92,6 +96,44 @@ class MainActivity : ComponentActivity() {
             override fun onPermissionRequest(request: PermissionRequest?) {
                 request!!.grant(request.resources)
             }
+        }
+
+        myWebView.webViewClient = object: WebViewClient() {
+            override fun shouldOverrideUrlLoading(view: WebView,request: WebResourceRequest): Boolean {
+                Log.d("tag", request.url.toString())
+
+                if (request.url.scheme == "intent") {
+                    try {
+                        // Intent 생성
+                        val intent = Intent.parseUri(request.url.toString(), Intent.URI_INTENT_SCHEME)
+
+                        // 실행 가능한 앱이 있으면 앱 실행
+                        if (intent.resolveActivity(packageManager) != null) {
+                            startActivity(intent)
+                            Log.d("tag", "ACTIVITY: ${intent.`package`}")
+                            return true
+                        }
+
+                        // Fallback URL이 있으면 현재 웹뷰에 로딩
+                        val fallbackUrl = intent.getStringExtra("browser_fallback_url")
+                        if (fallbackUrl != null) {
+                            view.loadUrl(fallbackUrl)
+                            Log.d("tag", "FALLBACK: $fallbackUrl")
+                            return true
+                        }
+
+                        Log.e("tag", "Could not parse anythings")
+
+                    } catch (e: URISyntaxException) {
+                        Log.e("tag", "Invalid intent request", e)
+                    }
+                }
+
+                // 나머지 서비스 로직 구현
+
+                return false
+            }
+
         }
     }
 
