@@ -11,6 +11,7 @@ activityCompose = "1.9.1"
 composeBom = "2024.08.00"
 firebaseBom = "33.2.0"
 workRuntimeKtx = "2.9.1"
+fragment = "1.5.7"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -31,6 +32,8 @@ google-firebase-bom = { group = "com.google.firebase", name = "firebase-bom", ve
 google-firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics" }
 google-firebase-messaging = { group = "com.google.firebase", name="firebase-messaging-ktx"}
 androidx-work-runtime-ktx = { group = "androidx.work", name = "work-runtime-ktx", version.ref = "workRuntimeKtx" }
+androidx-fragment = { group = "androidx.fragment", name = "fragment-ktx", version.ref = "fragment"}
+
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }

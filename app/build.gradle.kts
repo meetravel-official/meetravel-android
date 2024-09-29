@@ -11,7 +11,7 @@ android {
 
     defaultConfig {
         applicationId = "com.life.meetravel"
-        minSdk = 24
+        minSdk = 21
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -72,4 +72,5 @@ dependencies {
     implementation(platform(libs.google.firebase.bom))
     implementation(libs.google.firebase.analytics)
     implementation(libs.google.firebase.messaging)
+    implementation(libs.androidx.fragment)
 }
