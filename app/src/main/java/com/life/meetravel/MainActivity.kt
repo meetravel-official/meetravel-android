@@ -4,18 +4,20 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
-import android.os.Message
 import android.provider.MediaStore
 import android.util.Log
 import android.webkit.PermissionRequest
 import android.webkit.ValueCallback
 import android.webkit.WebChromeClient
 import android.webkit.WebResourceRequest
+import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.activity.ComponentActivity
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.google.firebase.messaging.FirebaseMessaging
@@ -36,6 +38,7 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.M)
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,13 +61,16 @@ class MainActivity : ComponentActivity() {
             // sendTokenToServer(token)
         }
         getPermission()
-        myWebView.loadUrl("https://meetravel.life")
+        myWebView.loadUrl("https://meetravel.life/")
+
         myWebView.settings.apply {
             javaScriptEnabled = true
             javaScriptCanOpenWindowsAutomatically = true
             setSupportMultipleWindows(true)
             builtInZoomControls=false
             allowFileAccess=true
+            domStorageEnabled=true
+            mixedContentMode=WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
         }
         myWebView.webChromeClient = object : WebChromeClient() {
             @SuppressLint("IntentReset", "QueryPermissionsNeeded")
@@ -138,6 +144,7 @@ class MainActivity : ComponentActivity() {
     }
 
     // 앨범에 접근할 수 있는 권한
+    @RequiresApi(Build.VERSION_CODES.M)
     private fun getPermission() {
         val locationPermission = arrayOf(
             android.Manifest.permission.ACCESS_FINE_LOCATION,
