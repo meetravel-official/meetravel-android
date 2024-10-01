@@ -61,16 +61,17 @@ class MainActivity : ComponentActivity() {
             // sendTokenToServer(token)
         }
         getPermission()
-        myWebView.loadUrl("https://meetravel.life/")
+        myWebView.loadUrl("https://meetravel.life/auth/sign-in")
+//        myWebView.loadUrl("http://192.168.50.56:3030/auth/sign-up")
 
         myWebView.settings.apply {
             javaScriptEnabled = true
             javaScriptCanOpenWindowsAutomatically = true
-            setSupportMultipleWindows(true)
+//            setSupportMultipleWindows(true)
             builtInZoomControls=false
-            allowFileAccess=true
-            domStorageEnabled=true
-            mixedContentMode=WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
+            allowFileAccess = true
+            domStorageEnabled = true
+            mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
         }
         myWebView.webChromeClient = object : WebChromeClient() {
             @SuppressLint("IntentReset", "QueryPermissionsNeeded")
@@ -102,13 +103,17 @@ class MainActivity : ComponentActivity() {
             override fun onPermissionRequest(request: PermissionRequest?) {
                 request!!.grant(request.resources)
             }
+
         }
 
-        myWebView.webViewClient = object: WebViewClient() {
-            override fun shouldOverrideUrlLoading(view: WebView,request: WebResourceRequest): Boolean {
-                Log.d("tag", request.url.toString())
 
-                if (request.url.scheme == "intent") {
+
+        myWebView.webViewClient = object: WebViewClient() {
+            @SuppressWarnings("deprecation")
+            override fun shouldOverrideUrlLoading(view: WebView,request: WebResourceRequest): Boolean {
+                Log.d("URL", request.url.toString())
+                val url = request.url.toString()
+                if (url.contains("kauth.kakao.com")) {
                     try {
                         // Intent 생성
                         val intent = Intent.parseUri(request.url.toString(), Intent.URI_INTENT_SCHEME)
@@ -135,11 +140,14 @@ class MainActivity : ComponentActivity() {
                     }
                 }
 
-                // 나머지 서비스 로직 구현
+                if (!url.contains("meetravel") && !url.contains("localhost")) {
+                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                    startActivity(intent)
+                    return true
+                }
 
                 return false
             }
-
         }
     }
 
