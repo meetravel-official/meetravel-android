@@ -154,10 +154,6 @@ class MainActivity : ComponentActivity() {
     // 앨범에 접근할 수 있는 권한
     @RequiresApi(Build.VERSION_CODES.M)
     private fun getPermission() {
-        val locationPermission = arrayOf(
-            android.Manifest.permission.ACCESS_FINE_LOCATION,
-            android.Manifest.permission.ACCESS_COARSE_LOCATION
-        )
         val permission = mutableMapOf<String, String>()
 
         permission["READSTORAGE"] = android.Manifest.permission.READ_EXTERNAL_STORAGE
@@ -172,8 +168,6 @@ class MainActivity : ComponentActivity() {
 
         if (denied > 0) {
             requestPermissions(permission.values.toTypedArray(), 100)
-        } else {
-            ActivityCompat.requestPermissions(this, locationPermission, 400)
         }
     }
 
